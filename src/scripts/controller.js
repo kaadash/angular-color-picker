@@ -1,3 +1,4 @@
+/* eslint-disable */
 import tinycolor from 'tinycolor2';
 
 export default class AngularColorPickerController {
@@ -22,8 +23,8 @@ export default class AngularColorPickerController {
         };
 
         this.sliderDimensions = {
-            width: 20,
-            height: 150
+            width: 150,
+            height: 20
         };
     }
 
@@ -604,9 +605,9 @@ export default class AngularColorPickerController {
 
     huePosUpdate () {
         var el = angular.element(this.$element[0].querySelector('.color-picker-hue .color-picker-slider'));
-
         el.css({
-            'top': (this.sliderDimensions.height * this.huePos / 100) + 'px'
+            'background-color': '#' + tinycolor({h: this.hue, s: 1, l: 0.5}).toHex(),
+            'left': (this.sliderDimensions.width * this.huePos / 100) + 'px'
         });
     }
 
@@ -676,7 +677,7 @@ export default class AngularColorPickerController {
         var el = this.find('.color-picker-hue');
         var eventPos = this.getEventPos(event);
 
-        this.hue = Math.round((1 - ((eventPos.pageY - this.offset(el).top) / el.prop('offsetHeight'))) * 360);
+        this.hue = Math.round((1 - ((eventPos.pageX - this.offset(el).left) / el.prop('offsetWidth'))) * 360);
 
         if (this.hue > 360) {
             this.hue = 360;

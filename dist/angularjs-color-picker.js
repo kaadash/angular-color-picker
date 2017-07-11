@@ -1,10 +1,10 @@
 /*!
- * angularjs-color-picker v3.2.1
+ * angularjs-color-picker v3.3.0
  * https://github.com/ruhley/angular-color-picker/
  *
  * Copyright 2017 ruhley
  *
- * 2017-05-15 02:14:55
+ * 2017-07-11 10:58:12
  *
  */
 
@@ -56,6 +56,7 @@ var createClass = function () {
   };
 }();
 
+/* eslint-disable */
 var AngularColorPickerController = function () {
     function AngularColorPickerController(_$scope, _$element, _$document, _$timeout, _ColorPickerOptions) {
         classCallCheck(this, AngularColorPickerController);
@@ -80,8 +81,8 @@ var AngularColorPickerController = function () {
         };
 
         this.sliderDimensions = {
-            width: 20,
-            height: 150
+            width: 150,
+            height: 20
         };
     }
 
@@ -628,7 +629,7 @@ var AngularColorPickerController = function () {
                         }
                         break;
 
-                    case 'hexString':
+                    case 'hexstring':
                         if (this.options.case === 'lower') {
                             this.ngModel = color.toHexString().toLowerCase();
                         } else {
@@ -636,7 +637,7 @@ var AngularColorPickerController = function () {
                         }
                         break;
 
-                    case 'hex8String':
+                    case 'hex8string':
                         if (this.options.case === 'lower') {
                             this.ngModel = color.toHex8String().toLowerCase();
                         } else {
@@ -670,9 +671,9 @@ var AngularColorPickerController = function () {
         key: 'huePosUpdate',
         value: function huePosUpdate() {
             var el = angular.element(this.$element[0].querySelector('.color-picker-hue .color-picker-slider'));
-
             el.css({
-                'top': this.sliderDimensions.height * this.huePos / 100 + 'px'
+                'background-color': '#' + tinycolor({ h: this.hue, s: 1, l: 0.5 }).toHex(),
+                'left': this.sliderDimensions.width * this.huePos / 100 + 'px'
             });
         }
     }, {
@@ -749,7 +750,7 @@ var AngularColorPickerController = function () {
             var el = this.find('.color-picker-hue');
             var eventPos = this.getEventPos(event);
 
-            this.hue = Math.round((1 - (eventPos.pageY - this.offset(el).top) / el.prop('offsetHeight')) * 360);
+            this.hue = Math.round((1 - (eventPos.pageX - this.offset(el).left) / el.prop('offsetWidth')) * 360);
 
             if (this.hue > 360) {
                 this.hue = 360;
