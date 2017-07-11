@@ -4,7 +4,7 @@
  *
  * Copyright 2017 ruhley
  *
- * 2017-07-11 10:58:12
+ * 2017-07-11 11:11:10
  *
  */
 
@@ -629,7 +629,7 @@ var AngularColorPickerController = function () {
                         }
                         break;
 
-                    case 'hexstring':
+                    case 'hexString':
                         if (this.options.case === 'lower') {
                             this.ngModel = color.toHexString().toLowerCase();
                         } else {
@@ -637,7 +637,7 @@ var AngularColorPickerController = function () {
                         }
                         break;
 
-                    case 'hex8string':
+                    case 'hex8String':
                         if (this.options.case === 'lower') {
                             this.ngModel = color.toHex8String().toLowerCase();
                         } else {
