@@ -241,16 +241,14 @@ export default class AngularColorPickerController {
 
     initMouseEvents() {
         const eventHandlers = {
-            mouseDown: this.onMouseDown.bind(this),
             mouseUp: this.onMouseUp.bind(this),
             mouseMove: this.onMouseMove.bind(this),
             keyUp: this.onKeyUp.bind(this)
         };
 
         // setup mouse events
-        this.$document.on('mousedown', eventHandlers.mouseDown);
-        this.$document.on('mouseup', eventHandlers.mouseUp);
-        this.$document.on('mousemove', eventHandlers.mouseMove);
+        this.$document.on('mouseup.colorPicker', eventHandlers.mouseUp);
+        this.$document.on('mousemove.colorPicker', eventHandlers.mouseMove);
 
         // setup touch events
         this.$document.on('touchstart', eventHandlers.mouseDown);
@@ -289,9 +287,9 @@ export default class AngularColorPickerController {
 
         this.$scope.$on('$destroy', () => {
             // remove mouse events
-            this.$document.off('mousedown', eventHandlers.mouseDown);
-            this.$document.off('mouseup', eventHandlers.mouseUp);
-            this.$document.off('mousemove', eventHandlers.mouseMove);
+            this.$document.off('mousedown.colorPicker', eventHandlers.mouseDown);
+            this.$document.off('mouseup.colorPicker', eventHandlers.mouseUp);
+            this.$document.off('mousemove.colorPicker', eventHandlers.mouseMove);
 
             // remove touch events
             this.$document.off('touchstart', eventHandlers.mouseDown);
@@ -305,35 +303,14 @@ export default class AngularColorPickerController {
         });
     }
 
-    onMouseDown (event) {
+    onMouseDownColorGrid(ev) {
         this.has_moused_moved = false;
+        this.colorDown(ev);
+    }
 
-        // if disabled or not an element in this picker then do nothing
-        if (this.options.disabled || this.find(event.target).length === 0) {
-            return true;
-        }
-
-        // mouse event on color grid
-        if (event.target.classList.contains('color-picker-grid-inner') || event.target.classList.contains('color-picker-picker') || event.target.parentNode.classList.contains('color-picker-picker')) {
-            this.colorDown(event);
-            this.$scope.$apply();
-        // mouse event on hue slider
-        } else if (event.target.classList.contains('color-picker-hue') || event.target.parentNode.classList.contains('color-picker-hue')) {
-            this.hueDown(event);
-            this.$scope.$apply();
-        // mouse event on saturation slider
-        } else if (event.target.classList.contains('color-picker-saturation') || event.target.parentNode.classList.contains('color-picker-saturation')) {
-            this.saturationDown(event);
-            this.$scope.$apply();
-        // mouse event on lightness slider
-        } else if (event.target.classList.contains('color-picker-lightness') || event.target.parentNode.classList.contains('color-picker-lightness')) {
-            this.lightnessDown(event);
-            this.$scope.$apply();
-        // mouse event on opacity slider
-        } else if (event.target.classList.contains('color-picker-opacity') || event.target.parentNode.classList.contains('color-picker-opacity')) {
-            this.opacityDown(event);
-            this.$scope.$apply();
-        }
+    onMouseDownHue(ev) {
+        this.has_moused_moved = false;
+        this.hueDown(ev);
     }
 
     onMouseUp (event) {
@@ -374,6 +351,7 @@ export default class AngularColorPickerController {
 
     onMouseMove (event) {
         // mouse event on color grid
+
         if (this.colorMouse) {
             this.has_moused_moved = true;
             this.colorChange(event);
@@ -968,7 +946,6 @@ export default class AngularColorPickerController {
 
     colorDown (event) {
         this.stopEvent(event);
-
         this.colorMouse = true;
     }
 

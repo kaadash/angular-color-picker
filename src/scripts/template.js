@@ -25,14 +25,14 @@ export default function template($templateCache) {
            '}">' +
                '<div class="color-picker-grid-wrapper">' +
                    '<div class="color-picker-row">' +
-                       '<div class="color-picker-grid">' +
+                       '<div class="color-picker-grid" ng-mousedown="AngularColorPickerController.onMouseDownColorGrid($event)">' +
                            '<div class="color-picker-overlay"></div>' +
                            '<div class="color-picker-grid-inner"></div>' +
                            '<div class="color-picker-picker">' +
                                '<div></div>' +
                            '</div>' +
                        '</div>' +
-                       '<div class="color-picker-hue" ng-show="AngularColorPickerController.options.hue">' +
+                       '<div class="color-picker-hue" ng-show="AngularColorPickerController.options.hue" ng-mousedown="AngularColorPickerController.onMouseDownHue($event)">' +
                            '<div class="color-picker-overlay"></div>' +
                            '<div class="color-picker-slider"></div>' +
                        '</div>' +
